@@ -40,7 +40,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: 'babel-loader',
       query: {
         presets: [
           'react',
@@ -52,16 +52,16 @@ module.exports = {
       },
     }, {
       test: /\.scss$/,
-      loaders: ['style', 'css', 'sass?sourceMap'],
+      loaders: ['style-loader', 'css-loader', 'sass-loader?sourceMap'],
     }, {
       test: /\.(jpe?g|png|gif|svg)$/i,
       loaders: [
-        'file?hash=sha512&digest=hex&name=[hash].[ext]',
-        'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
+        'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+        'image-webpack-loader?bypassOnDebugs',
       ],
     }, {
       test: /\.(eot|svg|ttf|woff?)$/,
-      loader: 'file?name=assets/fonts/[name].[ext]',
+      loader: 'file-loader?name=assets/fonts/[name].[ext]',
     }],
   },
   sassLoader: {

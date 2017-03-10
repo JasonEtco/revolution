@@ -47,7 +47,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: 'babel-loader',
       query: {
         presets: [['env', { targets: { browsers } }], 'es2015', 'stage-0', 'react'],
         plugins: ['transform-runtime'],
@@ -57,16 +57,16 @@ module.exports = {
       loader: 'json',
     }, {
       test: /\.scss$/,
-      loader: ExtractTextPlugin.extract(['css', 'sass!postcss?sourceMap']),
+      loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader!postcss-loader?sourceMap']),
     }, {
       test: /\.(jpe?g|png|gif|svg)$/i,
       loaders: [
-        'file?hash=sha512&digest=hex&name=[hash].[ext]',
-        'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
+        'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+        'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false',
       ],
     }, {
       test: /\.(eot|svg|ttf|woff?)$/,
-      loader: 'file?name=assets/fonts/[name].[ext]',
+      loader: 'file-loader?name=assets/fonts/[name].[ext]',
     }],
   },
   postcss: [
