@@ -8,6 +8,7 @@ const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('../config/webpack.config');
+const { shuffle } = require('./utils/helpers');
 
 const app = express();
 const http = require('http').Server(app);
@@ -15,12 +16,16 @@ const io = require('socket.io')(http);
 
 app.use(compression());
 
+const orderedCandidates = ['trump', 'vader', 'clinton'];
 let connectCounter = 0;
 let votes = [0, 0];
+let shuffled = shuffle(orderedCandidates);
+let candidates = [shuffled[0], shuffled[1]];
+
 io.on('connection', (socket) => {
   connectCounter += 1;
 
-  socket.emit('get-votes', { votes, connectCounter });
+  socket.emit('get-votes', { votes, connectCounter, candidates });
 
   socket.on('vote', (index) => {
     votes[index] += 1;
@@ -35,6 +40,8 @@ io.on('connection', (socket) => {
     connectCounter -= 1;
     if (connectCounter === 0) {
       votes = [0, 0];
+      shuffled = shuffle(orderedCandidates);
+      candidates = [shuffled[0], shuffled[1]];
     }
   });
 });

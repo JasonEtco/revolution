@@ -5,6 +5,9 @@ html, body, .mount {
 }
 
 body {
+    background: url('./assets/whitehouse.jpg');
+    background-size: cover;
+    background-position: center center;
     background-color: $grey-lighter;
     font-family: $font;
 
