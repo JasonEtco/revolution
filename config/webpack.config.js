@@ -62,6 +62,9 @@ module.exports = {
     }, {
       test: /\.(eot|svg|ttf|woff?)$/,
       loader: 'file-loader?name=assets/fonts/[name].[ext]',
+    }, {
+      test: /\.mp3$/,
+      loader: 'file-loader?name=assets/[name].[ext]',
     }],
   },
   sassLoader: {

@@ -3,7 +3,7 @@ import h from '../../helpers';
 import * as assets from '../../assets';
 import './App.scss';
 
-const { trump, hillaryclinton, vader, whitehouse } = assets.default;
+const { trump, hillaryclinton, vader, whitehouse, presidentialmusic } = assets.default;
 
 const ordered = {
   trump: { name: 'Donald Trump', image: trump },
@@ -82,6 +82,8 @@ export default class App extends Component {
               </div>),
             )}
           </div>
+
+          <audio autoPlay src={presidentialmusic} />
         </main>
       );
     }
