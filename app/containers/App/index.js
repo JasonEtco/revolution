@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import h from '../../helpers';
 import * as assets from '../../assets';
 import './App.scss';
 
@@ -33,10 +32,12 @@ export default class App extends Component {
 
     // Listen for socket events
     socket.on('get-votes', (data) => {
-      this.setState({ ...data, candidates: [
-        ordered[data.candidates[0]],
-        ordered[data.candidates[1]]
-      ] });
+      this.setState({ ...data,
+        candidates: [
+          ordered[data.candidates[0]],
+          ordered[data.candidates[1]],
+        ],
+      });
       if (data.connectCounter === 1) {
         // Set timer
         setTimeout(() => {
@@ -57,7 +58,6 @@ export default class App extends Component {
   }
 
   transitionEnd(e) {
-    console.log(e.propertyName);
     if (e.propertyName.includes('transform')) {
       this.setState({ voting: false });
     }
