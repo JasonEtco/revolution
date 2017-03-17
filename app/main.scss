@@ -12,6 +12,24 @@ body {
     font-family: $font;
 
     &.body--grey { background-color: $grey-light; }
+
+    &.body--red {
+        background: url('./assets/hell.jpg');
+        color: white;
+        font-family: 'Permanent Marker', cursive;
+        text-shadow: 0 2px 4px rgba(black, 0.5);
+
+        .candidate__image {
+            width: 40vh;
+            height: 40vh;
+            animation: shake 300ms alternate infinite linear;
+            @keyframes shake {
+                0% { transform: rotate(10deg); }
+
+                100% { transform: rotate(-10deg); }
+            }
+        }
+    }
 }
 
 .form-element {

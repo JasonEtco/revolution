@@ -42,7 +42,7 @@ export default class App extends Component {
         // Set timer
         setTimeout(() => {
           socket.emit('end-votes');
-        }, 10000);
+        }, 15000);
       }
     });
 
@@ -55,6 +55,13 @@ export default class App extends Component {
       const winner = votes[0] < votes[1] ? 0 : 1;
       this.setState({ leaving: true, winner });
     });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState, this.state);
+    if (prevState.voting && this.state.voting === false) {
+      document.body.classList.add('body--red');
+    }
   }
 
   transitionEnd(e) {
@@ -94,8 +101,13 @@ export default class App extends Component {
     }
 
     // If not in voting phase
+    const w = candidates[winner];
     return (
-      <div className="winner">{candidates[winner].name}</div>
+      <div className="candidate" key={w.name}>
+        <h1 style={{ fontSize: '5rem' }}>YOUR OPINION DOESN'T MATTER</h1>
+        <div className="candidate__image" style={{ backgroundImage: `url(${w.image})` }} role="presentation" alt={w.name} />
+        <h1>{w.name} is the winner, you PEASANTS</h1>
+      </div>
     );
   }
 }
