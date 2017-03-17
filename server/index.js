@@ -17,7 +17,11 @@ const io = require('socket.io')(http);
 app.use(compression());
 
 const orderedCandidates = ['trump', 'vader', 'clinton'];
+
+// Keep track of number of currently connected clients
 let connectCounter = 0;
+
+// Default votes is 0 for each candidate
 let votes = [0, 0];
 let shuffled = shuffle(orderedCandidates);
 let candidates = [shuffled[0], shuffled[1]];
@@ -25,19 +29,30 @@ let candidates = [shuffled[0], shuffled[1]];
 io.on('connection', (socket) => {
   connectCounter += 1;
 
+  // Emit first state that contains the current
+  // votes and the newly updated connectCounter
   socket.emit('get-votes', { votes, connectCounter, candidates });
 
+  // Update server-side vote count
   socket.on('vote', (index) => {
     votes[index] += 1;
+
+    // Emit new vote count
     io.emit('vote', votes);
   });
 
+  // Voting phase has ended
   socket.on('end-votes', () => {
+    // Tell everyone!
     io.emit('end-votes');
   });
 
+  // Reduce the counter when a user disconnects
   socket.on('disconnect', () => {
     connectCounter -= 1;
+
+    // If there are no active clients,
+    // reset the vote count
     if (connectCounter === 0) {
       votes = [0, 0];
       shuffled = shuffle(orderedCandidates);
