@@ -19,6 +19,22 @@ body {
         font-family: 'Permanent Marker', cursive;
         text-shadow: 0 2px 4px rgba(black, 0.5);
 
+        .candidate {
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                top: 15vh;
+                width: 50vh;
+                height: 50vh;
+                background: url('./assets/devil-horns.png');
+                background-size: cover;
+                background-position: center center;
+            }
+        }
+
         .candidate__image {
             width: 40vh;
             height: 40vh;
