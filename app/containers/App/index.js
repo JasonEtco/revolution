@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import * as assets from '../../assets';
 import './App.scss';
 
-const { trump, hillaryclinton, vader, presidentialmusic } = assets.default;
+const { trump, hillaryclinton, vader, presidentialmusic, text, deathmetal } = assets.default;
 
 const ordered = {
   trump: { name: 'Donald Trump', image: trump },
@@ -19,12 +19,17 @@ export default class App extends Component {
     super(props);
     this.vote = this.vote.bind(this);
     this.transitionEnd = this.transitionEnd.bind(this);
+    this.winnerTransitionEnd = this.winnerTransitionEnd.bind(this);
+    this.videoEnd = this.videoEnd.bind(this);
   }
 
   state = {
+    didVote: false,
     votes: false,
     voting: true,
     candidates: [null, null],
+    textPhase: false,
+    revolutionPhase: false,
   }
 
   componentDidMount() {
@@ -61,6 +66,10 @@ export default class App extends Component {
     console.log(prevState, this.state);
     if (prevState.voting && this.state.voting === false) {
       document.body.classList.add('body--red');
+
+      setTimeout(() => {
+        this.setState({ textPhase: true });
+      }, 5000);
     }
   }
 
@@ -70,14 +79,27 @@ export default class App extends Component {
     }
   }
 
+  winnerTransitionEnd(e) {
+    if (e.propertyName === 'height') {
+      this.video.play();
+    }
+  }
+
+  videoEnd() {
+    setTimeout(() => {
+      this.setState({ revolutionPhase: true });
+    }, 2000);
+  }
+
   vote(index) {
     const { socket } = this.props;
+    this.setState({ didVote: true });
     socket.emit('vote', index);
   }
 
   render() {
     const { socket } = this.props;
-    const { votes, voting, candidates, winner, leaving } = this.state;
+    const { votes, voting, candidates, winner, leaving, didVote, textPhase, revolutionPhase } = this.state;
     if (!socket || votes === false) return null;
 
     // If during voting phase
@@ -89,7 +111,7 @@ export default class App extends Component {
               <div className="candidate" key={c.name}>
                 <div className="candidate__image" style={{ backgroundImage: `url(${c.image})` }} role="presentation" alt={c.name} />
                 <h1>{c.name}</h1>
-                <button className="candidate__vote" onClick={() => this.vote(i)}>VOTE</button>
+                <button disabled={didVote} className="candidate__vote" onClick={() => this.vote(i)}>VOTE</button>
                 <p><strong>Votes: </strong>{votes[i]}</p>
               </div>),
             )}
@@ -103,10 +125,24 @@ export default class App extends Component {
     // If not in voting phase
     const w = candidates[winner];
     return (
-      <div className="candidate" key={w.name}>
-        <h1 style={{ fontSize: '5rem' }}>YOUR OPINION DOESN'T MATTER</h1>
-        <div className="candidate__image" style={{ backgroundImage: `url(${w.image})` }} role="presentation" alt={w.name} />
-        <h1>{w.name} is the winner, you PEASANTS</h1>
+      <div className="winnerPhase">
+        <section className={`candidate ${textPhase && 'textPhase'}`} key={w.name} onTransitionEnd={this.winnerTransitionEnd}>
+          <div className="candidate__image" style={{ backgroundImage: `url(${w.image})` }} role="presentation" alt={w.name} />
+          <h1>{w.name} is the winner!</h1>
+        </section>
+
+        <section className={`text ${revolutionPhase && 'revolutionPhase'}`}>
+          <video muted ref={(r) => { this.video = r; }} onEnded={this.videoEnd}>
+            <source src={text.webm} type="video/webm" />
+            <source src={text.mp4} type="video/mp4" />
+          </video>
+        </section>
+
+        <section className="revolution">
+          <span>Let&apos;s start a...</span>
+          <h1>Revolution</h1>
+        </section>
+        <audio autoPlay src={deathmetal} />
       </div>
     );
   }

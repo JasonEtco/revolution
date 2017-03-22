@@ -63,7 +63,7 @@ module.exports = {
       test: /\.(eot|svg|ttf|woff?)$/,
       loader: 'file-loader?name=assets/fonts/[name].[ext]',
     }, {
-      test: /\.mp3$/,
+      test: /\.(mp3|mp4|webm)$/,
       loader: 'file-loader?name=assets/[name].[ext]',
     }],
   },
