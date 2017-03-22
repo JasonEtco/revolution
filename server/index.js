@@ -88,7 +88,7 @@ if (isDeveloping) {
 
   console.log('[App: App] initialized in Dev mode.');
 } else {
-  const STATIC_PATH = path.join(__dirname, '..', 'app');
+  const STATIC_PATH = path.join(__dirname, '..', 'dist');
   const STATIC_OPTS = {
     maxAge: 31536000000, // One year
   };
@@ -96,7 +96,7 @@ if (isDeveloping) {
   app.use(express.static(STATIC_PATH, STATIC_OPTS));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'app', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
   });
   console.log('[App: App] initialized.');
 }

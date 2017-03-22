@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "nodemon --ignore app server/index.js",
-    "build": "rimraf admin && cross-env NODE_ENV=production webpack --config ./config/webpack.production.config.js --progress --profile --colors",
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./config/webpack.production.config.js --progress --profile --colors",
     "lint": "eslint **/*.js",
     "test": "jest --coverage",
     "serve": "node server/index.js",

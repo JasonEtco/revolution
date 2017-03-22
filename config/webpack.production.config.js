@@ -8,11 +8,10 @@ const { browsers } = require('./browser');
 
 module.exports = {
   entry: [
-    'whatwg-fetch',
     path.resolve(__dirname, '..', 'app', 'main.js'),
   ],
   output: {
-    path: path.join(__dirname, '..', 'app'),
+    path: path.join(__dirname, '..', 'dist'),
     filename: '[name]-[hash].min.js',
     publicPath: '/',
   },
@@ -67,6 +66,9 @@ module.exports = {
     }, {
       test: /\.(eot|svg|ttf|woff?)$/,
       loader: 'file-loader?name=assets/fonts/[name].[ext]',
+    }, {
+      test: /\.(mp3|mp4|webm)$/,
+      loader: 'file-loader?name=assets/[name].[ext]',
     }],
   },
   postcss: [
