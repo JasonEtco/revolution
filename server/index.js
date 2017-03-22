@@ -16,6 +16,7 @@ const io = require('socket.io')(http);
 
 app.use(compression());
 
+const timer = process.env.TIMER || 15000;
 const orderedCandidates = ['trump', 'vader', 'clinton'];
 
 // Keep track of number of currently connected clients
@@ -31,7 +32,7 @@ io.on('connection', (socket) => {
 
   // Emit first state that contains the current
   // votes and the newly updated connectCounter
-  socket.emit('get-votes', { votes, connectCounter, candidates });
+  socket.emit('get-votes', { votes, connectCounter, candidates, timer });
 
   // Update server-side vote count
   socket.on('vote', (index) => {

@@ -47,7 +47,7 @@ export default class App extends Component {
         // Set timer
         setTimeout(() => {
           socket.emit('end-votes');
-        }, 15000);
+        }, data.timer || 15000);
       }
     });
 
