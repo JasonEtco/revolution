@@ -8,7 +8,6 @@ const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('../config/webpack.config');
-const { shuffle } = require('./utils/helpers');
 
 const app = express();
 const http = require('http').Server(app);
@@ -16,8 +15,26 @@ const io = require('socket.io')(http);
 
 app.use(compression());
 
+function shuffle(arr) {
+  const array = arr;
+  let currentIndex = array.length;
+  let temporaryValue;
+  let randomIndex;
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+
 const timer = process.env.TIMER || 15000;
-const orderedCandidates = ['trump', 'vader', 'clinton'];
+const orderedCandidates = ['trump', 'vader', 'clinton', 'warren', 'drake', 'sanders'];
 
 // Keep track of number of currently connected clients
 let connectCounter = 0;
@@ -103,5 +120,3 @@ if (isDeveloping) {
 }
 
 http.listen(port, () => console.log(`[HTTP Server] Running at http://localhost:${port}`));
-
-module.exports = app;

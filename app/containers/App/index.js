@@ -2,12 +2,25 @@ import React, { Component, PropTypes } from 'react';
 import * as assets from '../../assets';
 import './App.scss';
 
-const { trump, hillaryclinton, vader, presidentialmusic, text, deathmetal } = assets.default;
+const {
+  trump,
+  hillaryclinton,
+  vader,
+  presidentialmusic,
+  text,
+  deathmetal,
+  warren,
+  sanders,
+  drake,
+} = assets.default;
 
 const ordered = {
   trump: { name: 'Donald Trump', image: trump },
   vader: { name: 'Darth Vader', image: vader },
   clinton: { name: 'Hillary Clinton', image: hillaryclinton },
+  sanders: { name: 'Bernie Sanders', image: sanders },
+  drake: { name: 'Drake', image: drake },
+  warren: { name: 'Elizabeth Warren', image: warren },
 };
 
 export default class App extends Component {
@@ -63,7 +76,6 @@ export default class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevState, this.state);
     if (prevState.voting && this.state.voting === false) {
       document.body.classList.add('body--red');
 
@@ -99,7 +111,17 @@ export default class App extends Component {
 
   render() {
     const { socket } = this.props;
-    const { votes, voting, candidates, winner, leaving, didVote, textPhase, revolutionPhase } = this.state;
+    const {
+      votes,
+      voting,
+      candidates,
+      winner,
+      leaving,
+      didVote,
+      textPhase,
+      revolutionPhase,
+    } = this.state;
+
     if (!socket || votes === false) return null;
 
     // If during voting phase
