@@ -12,6 +12,7 @@ const {
   warren,
   sanders,
   drake,
+  kanye,
 } = assets.default;
 
 const ordered = {
@@ -21,6 +22,7 @@ const ordered = {
   sanders: { name: 'Bernie Sanders', image: sanders },
   drake: { name: 'Drake', image: drake },
   warren: { name: 'Elizabeth Warren', image: warren },
+  kanye: { name: 'Kanye West', image: kanye },
 };
 
 export default class App extends Component {

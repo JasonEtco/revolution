@@ -34,7 +34,7 @@ function shuffle(arr) {
 }
 
 const timer = process.env.TIMER || 15000;
-const orderedCandidates = ['trump', 'vader', 'clinton', 'warren', 'drake', 'sanders'];
+const orderedCandidates = ['trump', 'vader', 'clinton', 'warren', 'drake', 'sanders', 'kanye'];
 
 // Keep track of number of currently connected clients
 let connectCounter = 0;
