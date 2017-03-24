@@ -105,7 +105,11 @@ button[disabled] {
 
         &.revolutionPhase {
             height: 0;
-            transition: height 400ms ease-in;
+            transition: height 400ms $standard;
+
+            + .revolution {
+                span, h1 { opacity: 1; }
+            }
         }
     }
 
@@ -119,9 +123,18 @@ button[disabled] {
         font-family: Georgia, 'Times New Roman', Times, serif;
         text-align: center;
 
+        span {
+            opacity: 0;
+            transition: opacity 600ms $standard;
+            transition-delay: 800ms;
+        }
+
         h1 {
+            opacity: 0;
             text-transform: uppercase;
             letter-spacing: 20px;
+            transition: opacity 1500ms $standard;
+            transition-delay: 2000ms;
         }
     }
 }
